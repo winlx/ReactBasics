@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Header from './components/Header';
 import Todo from './components/Todo';
+import Form from './components/Form';
 
 import todos from './todos';
 
@@ -17,6 +18,14 @@ class App extends React.Component {
 
     this.handleStatusChange = this.handleStatusChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  _nextId() {
+    this._id = this._id || 4;
+
+    return this._id++;
   }
 
   handleStatusChange(id) {
@@ -37,6 +46,30 @@ class App extends React.Component {
     this.setState({ todos: data });
   }
 
+  handleAdd(title) {
+    let todo = {
+      id: this._nextId(),
+      title,
+      completed: false,
+    };
+
+    let data = [...this.state.todos, todo];
+
+    this.setState({ todos: data });
+  }
+
+  handleEdit(id, title) {
+    let data = this.state.todos.map((todo) => {
+      if (todo.id === id) {
+        todo.title = title;
+      }
+
+      return todo;
+    });
+
+    this.setState({ todos: data });
+  }
+
   render() {
     return (
       <main>
@@ -50,8 +83,11 @@ class App extends React.Component {
               completed={todo.completed}
               onStatusChange={this.handleStatusChange}
               onDelete={this.handleDelete}
+              onEdit={this.handleEdit}
             />))}
         </section>
+
+        <Form onAdd={this.handleAdd} />
       </main>
     );
   }
