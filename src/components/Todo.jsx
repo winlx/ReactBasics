@@ -15,6 +15,12 @@ class Todo extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidUpdate() {
+    if (this.state.editing) {
+      this.input.focus();
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     let title = this.input.value;
