@@ -6,20 +6,25 @@ import Header from './components/Header';
 import Todo from './components/Todo';
 import Form from './components/Form';
 
-import todos from './todos';
-
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      todos: this.props.initialData,
+      todos: [],
     };
 
     this.handleStatusChange = this.handleStatusChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  componentDidMount() {
+    fetch('/api/todos')
+      .then(response => response.json())
+      .then(todos => this.setState({ todos }))
+      .catch(err => console.error(err));
   }
 
   _nextId() {
@@ -95,15 +100,10 @@ class App extends React.Component {
 
 App.propTypes = {
   title: PropTypes.string,
-  initialData: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    id: PropTypes.number.isRequired,
-  })).isRequired,
 };
 
 App.defaultProps = {
   title: 'Todo list',
 };
 
-ReactDOM.render(<App initialData={todos} />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

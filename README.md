@@ -18,6 +18,11 @@ git checkout components
 ```bash
 git checkout server
 ```
+####Start the server
+
+```bash
+node server
+```
 
 ## Routing
 
