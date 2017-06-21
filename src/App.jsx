@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import Header from './components/Header';
 import Todo from './components/Todo';
@@ -87,7 +88,15 @@ class App extends React.Component {
     return (
       <main>
         <Header title={this.props.title} todos={this.state.todos} />
-        <section className="todo-list">
+        <CSSTransitionGroup
+          className="todo-list"
+          component="section"
+          transitionName="slide"
+          transitionAppear={true}
+          transitionAppearTimeout={500}
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
           {this.state.todos.map(todo => (
             <Todo
               key={todo.id}
@@ -98,7 +107,7 @@ class App extends React.Component {
               onDelete={this.handleDelete}
               onEdit={this.handleEdit}
             />))}
-        </section>
+        </CSSTransitionGroup>
 
         <Form onAdd={this.handleAdd} />
       </main>
