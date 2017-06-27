@@ -22,6 +22,7 @@ module.exports = {
             presets: [
               ['env', { modules: false }],
               'react',
+              'stage-3',
             ],
           },
         },
@@ -50,6 +51,7 @@ module.exports = {
     port: 9000,
     stats: 'minimal',
     open: true,
+    historyApiFallback: true,
   },
   devtool: 'cheap-eval-source-map',
   resolve: {
